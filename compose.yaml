@@ -15,6 +15,10 @@ services:
     image: redis:8.0.1
     networks:
       - oacis_network
+  rails:
+    build: ./docker/rails
+    ports:
+      - "3000:3000"
 
 volumes:
   mongodb_data:
