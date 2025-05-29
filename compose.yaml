@@ -11,6 +11,10 @@ services:
       - mongodb_data:/data/db
     networks:
       - oacis_network
+  redis:
+    image: redis:8.0.1
+    networks:
+      - oacis_network
 
 volumes:
   mongodb_data:
