@@ -5,8 +5,6 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
-    ports:
-      - "27017:27017"
     volumes:
       - mongodb_data:/data/db
     networks:
@@ -19,6 +17,8 @@ services:
     build: ./docker/rails
     ports:
       - "3000:3000"
+    networks:
+      - oacis_network
 
 volumes:
   mongodb_data:
