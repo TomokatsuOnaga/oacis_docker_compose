@@ -5,4 +5,10 @@ RUN apt-get update -qq && apt-get install -y build-essential \
 
 RUN git clone --recursive -b master https://github.com/crest-cassia/oacis.git
 
-CMD ["bash"]
+RUN cd oacis
+
+RUN bundle install
+
+EXPOSE 3000
+
+CMD ["bundle", "exec", "rake", "daemon:start"]
