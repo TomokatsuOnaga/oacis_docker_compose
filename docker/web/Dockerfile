@@ -19,6 +19,9 @@ COPY ./sidekiq.rb /oacis/config/initializers/sidekiq.rb
 
 COPY ./sidekiq.yml /oacis/config/sidekiq.yml
 
+COPY ./routes.rb /oacis/config/routes.rb
+
+
 RUN mkdir -p /oacis/log
 
 RUN mkdir -p /oacis/tmp/pids
