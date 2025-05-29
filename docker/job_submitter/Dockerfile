@@ -13,7 +13,7 @@ COPY ./web/mongoid.yml /oacis/config/mongoid.yml
 
 COPY ./web/cable.yml /oacis/config/cable.yml
 
-RUN mkdir -p /oacis/tmp
+RUN mkdir -p /oacis/tmp/pids
 
 RUN mkdir -p /oacis/logs
 
