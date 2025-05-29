@@ -13,6 +13,10 @@ WORKDIR /oacis
 
 RUN bundle install
 
+RUN mkdir -p /oacis/logs
+
+RUN mkdir -p /oacis/tmp/pids
+
 EXPOSE 3000
 
 CMD ["bundle", "exec", "rake", "daemon:start"]
