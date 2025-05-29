@@ -19,6 +19,10 @@ COPY ./sidekiq.rb /oacis/config/initializers/sidekiq.rb
 
 COPY ./sidekiq.yml /oacis/config/sidekiq.yml
 
+RUN mkdir -p /oacis/log
+
+RUN mkdir -p /oacis/tmp/pids
+
 EXPOSE 3000
 
 CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
