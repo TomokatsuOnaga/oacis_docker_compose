@@ -31,6 +31,16 @@ COPY ./parameter_sets_creator.rb /oacis/app/workers/parameter_sets_creator.rb
 
 COPY ./app/controllers/runs_controller.rb /oacis/app/controllers/runs_controller.rb
 
+COPY ./.ssh/config /root/.ssh/config
+
+COPY ./.ssh/id_ed25519 /root/.ssh/id_ed25519
+
+RUN eval "$(ssh-agent -s)" && \
+    ssh-add /root/.ssh/id_ed25519 && \
+    chmod 600 /root/.ssh/config && \
+    chmod 600 /root/.ssh/id_ed25519 && \
+    chmod 700 /root/.ssh
+
 RUN mkdir -p /oacis/log
 
 RUN mkdir -p /oacis/tmp/pids
