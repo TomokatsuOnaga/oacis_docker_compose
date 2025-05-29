@@ -5,18 +5,18 @@ RUN apt-get update -qq && apt-get install -y build-essential \
 
 RUN git clone --recursive -b master https://github.com/crest-cassia/oacis.git
 
-COPY ./mongoid.yml /oacis/config/mongoid.yml
-
-COPY ./cable.yml /oacis/config/cable.yml
-
 WORKDIR /oacis
 
 RUN bundle install
+
+COPY ./web/mongoid.yml /oacis/config/mongoid.yml
+
+COPY ./web/cable.yml /oacis/config/cable.yml
 
 RUN mkdir -p /oacis/logs
 
 WORKDIR /oacis/lib/tasks
 
-COPY ./boot_job_submitter_worker.rb /oacis/lib/tasks/boot_job_submitter_worker.rb
+COPY ./job_submitter/boot_job_submitter_worker.rb /oacis/lib/tasks/boot_job_submitter_worker.rb
 
 CMD ["bundle", "exec", "ruby", "-r", "'/oacis/config/environment.rb'", "./boot_job_submitter_worker.rb", "start"]

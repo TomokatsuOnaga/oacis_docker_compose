@@ -5,13 +5,13 @@ RUN apt-get update -qq && apt-get install -y build-essential \
 
 RUN git clone --recursive -b master https://github.com/crest-cassia/oacis.git
 
+WORKDIR /oacis
+
 RUN bundle install
 
 COPY ./mongoid.yml /oacis/config/mongoid.yml
 
 COPY ./cable.yml /oacis/config/cable.yml
-
-WORKDIR /oacis
 
 EXPOSE 3000
 
