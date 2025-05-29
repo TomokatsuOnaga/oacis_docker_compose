@@ -9,6 +9,4 @@ WORKDIR /oacis
 
 RUN bundle install
 
-EXPOSE 3000
-
 CMD ["bundle", "exec", "rake", "daemon:start"]
