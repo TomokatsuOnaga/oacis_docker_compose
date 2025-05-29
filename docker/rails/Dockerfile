@@ -5,6 +5,8 @@ RUN apt-get update -qq && apt-get install -y build-essential \
 
 RUN git clone --recursive -b master https://github.com/crest-cassia/oacis.git
 
+COPY ./mongoid.yml /oacis/config/mongoid.yml
+
 WORKDIR /oacis
 
 RUN bundle install
