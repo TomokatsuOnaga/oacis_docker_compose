@@ -29,6 +29,8 @@ COPY ./document_destroyer.rb /oacis/app/workers/document_destroyer.rb
 
 COPY ./parameter_sets_creator.rb /oacis/app/workers/parameter_sets_creator.rb
 
+COPY ./app/controllers/runs_controller.rb /oacis/app/controllers/runs_controller.rb
+
 RUN mkdir -p /oacis/log
 
 RUN mkdir -p /oacis/tmp/pids

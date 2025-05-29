@@ -1,0 +1,129 @@
+class RunsController < ApplicationController
+
+  def index
+    respond_to do |format|
+      format.html
+    end
+  end
+
+  def _jobs_table
+    conditions = {}
+    conditions[:status] = params["run_status"] # required
+    conditions[:simulator_id] = params["simulator_id"] if params["simulator_id"].present?
+    render json: RunsListDatatable.new(Run.in(conditions), view_context)
+  end
+
+  def show
+    unless Run.where(id: params[:id]).exists?
+      flash[:alert] = "Run #{params[:id]} is not found"
+      redirect_to root_path and return
+    end
+    @run = Run.find(params[:id])
+    @param_set = @run.parameter_set
+    respond_to do |format|
+      format.html
+      format.json
+    end
+  end
+
+  def create
+    if params[:preview_button]
+      preview
+      return
+    end
+
+    @param_set = ParameterSet.find(params[:parameter_set_id])
+
+    num_runs = 1
+    num_runs = params[:num_runs].to_i if params[:num_runs]
+    raise 'params[:num_runs] is invalid' unless num_runs > 0
+
+    @runs = []
+    run_params = permitted_run_params
+    num_runs.times do |i|
+      run = @param_set.runs.build(run_params)
+      @runs << run if run.save
+    end
+
+    respond_to do |format|
+      if @runs.present?
+        message = "#{@runs.count} run#{@runs.size > 1 ? 's were' : ' was'} successfully created"
+        format.json { render json: @runs, status: :created, location: @param_set}
+        @messages = {success: [message]}
+        format.js
+      else
+        format.json {
+          render json: @runs.map{ |r| r.errors }, status: :unprocessable_entity
+        }
+        run = @param_set.runs.build(permitted_run_params)
+        run.valid?
+        @messages = {error: run.errors.full_messages }
+        format.js
+      end
+    end
+  end
+
+  def _analyses_list
+    run = Run.find(params[:id])
+    render json: AnalysesListDatatable.new(run.analyses, view_context)
+  end
+
+  def preview
+    param_set = ParameterSet.find(params[:parameter_set_id])
+    run = param_set.runs.build(permitted_run_params)
+    @error_messages = run.valid? ? [] : run.errors.full_messages
+    @script = JobScriptUtil.script_for(run) if run.valid?
+    respond_to do |format|
+      format.js {
+        render action: "preview"
+      }
+    end
+  end
+
+  def _delete_selected
+    selected_run_ids = params[:id_list].to_s.split(',')
+
+    cnt = 0
+    selected_run_ids.each do |run_id|
+      run = Run.where(id: run_id).first
+      next if run.nil?
+      run.discard
+      cnt += 1
+    end
+
+    if cnt == selected_run_ids.size
+      flash[:notice] = "#{cnt} run#{cnt > 1 ? 's were' : ' was'} successfully deleted"
+    elsif cnt == 0
+      flash[:alert] = "No runs were deleted"
+    else
+      flash[:alert] = "#{cnt} run#{cnt > 1 ? 's were' : ' was'} deleted (your request was #{selected_run_ids.size} deletion)"
+    end
+
+    redirect_back(fallback_location: runs_path)
+  end
+
+  private
+  def permitted_run_params
+    found = find_host_or_host_group
+
+    case found
+    when Host
+      host_param_keys = found.host_parameter_definitions.map(&:key)
+      params.require(:run).permit(:mpi_procs, :omp_threads, :priority, :submitted_to, host_parameters: host_param_keys)
+    when HostGroup
+      params[:run][:host_group] = params[:run][:submitted_to]
+      params.require(:run).permit(:mpi_procs, :omp_threads, :priority, :host_group)
+    else
+      raise "must not happen" # manual submission was abolished
+    end
+  end
+
+  def find_host_or_host_group
+    host_id = params[:run][:submitted_to]
+    if host_id.present?
+      Host.where(id:host_id).exists? ? Host.find(host_id) : HostGroup.find(host_id)
+    else
+      nil
+    end
+  end
+end
