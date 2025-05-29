@@ -21,4 +21,4 @@ volumes:
 
 networks:
   oacis_network:
-    driver: bridge  
+    driver: bridge
