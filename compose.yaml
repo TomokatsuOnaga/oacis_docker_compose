@@ -14,14 +14,6 @@ services:
     networks:
       - oacis_network
 
-  rails:
-    build: ./docker/rails
-    command: bundle exec rake daemon:start
-    ports:
-      - "3000:3000"
-    networks:
-      - oacis_network
-
   web:
     build: ./docker/rails
     command: bundle exec rails s -b 0.0.0.0
