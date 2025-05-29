@@ -32,7 +32,7 @@ gem 'font-awesome-rails'
 gem 'rubyzip'
 
 # for workers
-gem 'daemon-spawn', :require => 'daemon_spawn'
+gem "sidekiq", '~> 5.0'
 gem "sys-filesystem"
 
 # for cli

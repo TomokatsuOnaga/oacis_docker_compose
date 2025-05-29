@@ -5,6 +5,8 @@ RUN apt-get update -qq && apt-get install -y build-essential \
 
 RUN git clone --recursive -b master https://github.com/crest-cassia/oacis.git
 
+COPY ./Gemfile /oacis/Gemfile
+
 WORKDIR /oacis
 
 RUN bundle install
@@ -12,6 +14,10 @@ RUN bundle install
 COPY ./mongoid.yml /oacis/config/mongoid.yml
 
 COPY ./cable.yml /oacis/config/cable.yml
+
+COPY ./sidekiq.rb /oacis/config/initializers/sidekiq.rb
+
+COPY ./sidekiq.yml /oacis/config/sidekiq.yml
 
 EXPOSE 3000
 
