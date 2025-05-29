@@ -7,6 +7,8 @@ RUN git clone --recursive -b master https://github.com/crest-cassia/oacis.git
 
 COPY ./mongoid.yml /oacis/config/mongoid.yml
 
+COPY ./cable.yml /oacis/config/cable.yml
+
 WORKDIR /oacis
 
 RUN bundle install
