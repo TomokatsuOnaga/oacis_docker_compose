@@ -23,6 +23,12 @@ COPY ./routes.rb /oacis/config/routes.rb
 
 COPY ./job_submitter.rb /oacis/app/workers/job_submitter.rb
 
+COPY ./job_observer.rb /oacis/app/workers/job_observer.rb
+
+COPY ./document_destroyer.rb /oacis/app/workers/document_destroyer.rb
+
+COPY ./parameter_sets_creator.rb /oacis/app/workers/parameter_sets_creator.rb
+
 RUN mkdir -p /oacis/log
 
 RUN mkdir -p /oacis/tmp/pids
