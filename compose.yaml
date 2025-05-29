@@ -2,9 +2,6 @@ services:
   mongo:
     image: mongo:8.0.10-rc0
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
       - mongodb_data:/data/db
     networks:
