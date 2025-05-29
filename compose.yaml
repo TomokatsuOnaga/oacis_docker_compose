@@ -14,7 +14,6 @@ services:
 
   web:
     build: ./docker/web
-    command: bundle exec rails s -b 0.0.0.0
     environment:
       - RAILS_ENV=development
     ports:
@@ -25,30 +24,11 @@ services:
       - mongo
       - redis
 
-  job_submitter:
-    build: 
-      context: ./docker
-      dockerfile: job_submitter/Dockerfile
+  sidekiq:
+    build: ./docker/web
+    command: bundle exec sidekiq -C config/sidekiq.yml
     environment:
       - RAILS_ENV=development
-    networks:
-      - oacis_network
-    depends_on:
-      - web
-
-  job_observer:
-    build: ./docker/web
-    working_dir: /oacis/lib/tasks
-    command: bundle exec ruby -r '/oacis/config/environment.rb' ./boot_job_observer_worker.rb start
-    networks:
-      - oacis_network 
-    depends_on:
-      - web
-
-  service_worker:
-    build: ./docker/web
-    working_dir: /oacis/lib/tasks
-    command: bundle exec ruby -r '/oacis/config/environment.rb' ./boot_service_worker.rb start
     networks:
       - oacis_network
     depends_on:

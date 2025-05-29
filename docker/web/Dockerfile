@@ -15,4 +15,4 @@ COPY ./cable.yml /oacis/config/cable.yml
 
 EXPOSE 3000
 
-CMD ["bundle", "exec", "rake", "daemon:start"]
+CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
