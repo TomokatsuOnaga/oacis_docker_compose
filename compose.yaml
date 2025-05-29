@@ -29,6 +29,7 @@ services:
 
   job_submitter:
     build: ./docker/rails
+    working_dir: /oacis/lib/tasks
     command: bundle exec ruby -r './config/environment' ./config/boot_job_submitter_worker.rb start
     networks:
       - oacis_network
@@ -37,6 +38,7 @@ services:
 
   job_observer:
     build: ./docker/rails
+    working_dir: /oacis/lib/tasks
     command: bundle exec ruby -r './config/environment' ./config/boot_job_observer_worker.rb start
     networks:
       - oacis_network 
@@ -45,6 +47,7 @@ services:
 
   service_worker:
     build: ./docker/rails 
+    working_dir: /oacis/lib/tasks
     command: bundle exec ruby -r './config/environment' ./config/boot_service_worker.rb start
     networks:
       - oacis_network
