@@ -9,6 +9,8 @@ services:
       - mongodb_data:/data/db
     networks:
       - oacis_network
+    ports:
+      - "27017:27017"
   redis:
     image: redis:8.0.1
     networks:
