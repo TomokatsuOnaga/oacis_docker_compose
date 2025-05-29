@@ -21,6 +21,7 @@ COPY ./sidekiq.yml /oacis/config/sidekiq.yml
 
 COPY ./routes.rb /oacis/config/routes.rb
 
+COPY ./job_submitter.rb /oacis/app/workers/job_submitter.rb
 
 RUN mkdir -p /oacis/log
 
