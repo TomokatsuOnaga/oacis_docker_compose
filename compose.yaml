@@ -15,7 +15,7 @@ services:
       - oacis_network
 
   web:
-    build: ./docker/rails
+    build: ./docker/web
     command: bundle exec rails s -b 0.0.0.0
     environment:
       - RAILS_ENV=development
@@ -28,7 +28,7 @@ services:
       - redis
 
   job_submitter:
-    build: ./docker/rails
+    build: ./docker/web
     working_dir: /oacis/lib/tasks
     command: bundle exec ruby -r '/oacis/config/environment.rb' ./boot_job_submitter_worker.rb start
     networks:
@@ -37,7 +37,7 @@ services:
       - web
 
   job_observer:
-    build: ./docker/rails
+    build: ./docker/web
     working_dir: /oacis/lib/tasks
     command: bundle exec ruby -r '/oacis/config/environment.rb' ./boot_job_observer_worker.rb start
     networks:
@@ -46,7 +46,7 @@ services:
       - web
 
   service_worker:
-    build: ./docker/rails 
+    build: ./docker/web
     working_dir: /oacis/lib/tasks
     command: bundle exec ruby -r '/oacis/config/environment.rb' ./boot_service_worker.rb start
     networks:
