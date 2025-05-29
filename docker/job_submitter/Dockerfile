@@ -21,4 +21,4 @@ WORKDIR /oacis/lib/tasks
 
 COPY ./job_submitter/boot_job_submitter_worker.rb /oacis/lib/tasks/boot_job_submitter_worker.rb
 
-CMD ["bundle", "exec", "ruby", "-r", "/oacis/config/environment.rb", "./boot_job_submitter_worker.rb", "start"]
+CMD ["ruby", "./boot_job_submitter_worker.rb"]
