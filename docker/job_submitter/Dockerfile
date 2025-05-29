@@ -13,6 +13,10 @@ WORKDIR /oacis
 
 RUN bundle install
 
-EXPOSE 3000
+RUN mkdir -p /oacis/logs
 
-CMD ["bundle", "exec", "rake", "daemon:start"]
+WORKDIR /oacis/lib/tasks
+
+COPY ./boot_job_submitter_worker.rb /oacis/lib/tasks/boot_job_submitter_worker.rb
+
+CMD ["bundle", "exec", "ruby", "-r", "'/oacis/config/environment.rb'", "./boot_job_submitter_worker.rb", "start"]
