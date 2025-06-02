@@ -9,7 +9,7 @@ COPY ./Gemfile /oacis/Gemfile
 
 WORKDIR /oacis
 
-RUN bundle update && bundle install
+RUN bundle install
 
 COPY ./mongoid.yml /oacis/config/mongoid.yml
 
