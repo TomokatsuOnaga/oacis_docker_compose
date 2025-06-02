@@ -31,7 +31,9 @@ COPY ./parameter_sets_creator.rb /oacis/app/workers/parameter_sets_creator.rb
 
 COPY ./app/controllers/runs_controller.rb /oacis/app/controllers/runs_controller.rb
 
-COPY ./config/schedule.yml /oacis/config/schedule.yml
+COPY ./config/sidekiq.yml /oacis/config/sidekiq.yml
+
+COPY ./app/workers/hello_worker.rb /oacis/app/workers/hello_worker.rb
 
 COPY ./.ssh/config /root/.ssh/config
 

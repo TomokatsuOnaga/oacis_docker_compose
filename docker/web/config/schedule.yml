@@ -1,4 +1,0 @@
-job_submitter:
-  cron: '*/5 * * * * *' # 毎日0:00に実行
-  class: 'JobSubmitter'
-  queue: default

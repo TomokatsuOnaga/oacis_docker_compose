@@ -20,7 +20,7 @@ services:
 
   sidekiq:
     build: ./docker/web
-    command: bundle exec sidekiq -C config/sidekiq.yml
+    command: bundle exec sidekiq
     environment:
       - RAILS_ENV=development
     depends_on:
