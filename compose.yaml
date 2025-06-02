@@ -4,13 +4,9 @@ services:
     restart: always
     volumes:
       - mongodb_data:/data/db
-    networks:
-      - oacis_network
 
   redis:
     image: redis:8.0.1
-    networks:
-      - oacis_network
 
   web:
     build: ./docker/web
@@ -18,8 +14,6 @@ services:
       - RAILS_ENV=development
     ports:
       - "3000:3000"
-    networks:
-      - oacis_network
     depends_on:
       - mongo
       - redis
@@ -29,14 +23,8 @@ services:
     command: bundle exec sidekiq -C config/sidekiq.yml
     environment:
       - RAILS_ENV=development
-    networks:
-      - oacis_network
     depends_on:
       - web
 
 volumes:
   mongodb_data:
-
-networks:
-  oacis_network:
-    driver: bridge
