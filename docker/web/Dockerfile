@@ -21,7 +21,7 @@ COPY ./sidekiq.yml /oacis/config/sidekiq.yml
 
 COPY ./routes.rb /oacis/config/routes.rb
 
-COPY ./job_submitter.rb /oacis/app/workers/job_submitter.rb
+COPY ./app/workers/job_submitter.rb /oacis/app/workers/job_submitter.rb
 
 COPY ./job_observer.rb /oacis/app/workers/job_observer.rb
 

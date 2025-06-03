@@ -1,5 +1,9 @@
 :scheduler:
   :schedule:
+    job_submitter:
+      cron: '*/5 * * * * *'
+      class: JobSubmitter
+
     hello_worker:
       cron: '*/5 * * * * *'
       class: HelloWorker

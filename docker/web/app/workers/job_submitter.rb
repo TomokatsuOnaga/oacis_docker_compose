@@ -1,7 +1,7 @@
 class JobSubmitter
   include Sidekiq::Worker
 
-  def self.perform
+  def perform(logger)
     @last_performed_at ||= {}
     destroy_jobs_to_be_destroyed(logger)
     Host.where(status: :enabled).each do |host|
