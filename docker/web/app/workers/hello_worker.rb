@@ -1,5 +1,3 @@
-require 'sidekiq-scheduler'
-
 class HelloWorker
   include Sidekiq::Worker
 
