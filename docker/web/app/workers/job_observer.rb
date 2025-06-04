@@ -7,7 +7,7 @@ class JobObserver
 
   def perform()
     logger = LoggerForWorker.new(self.class::WORKER_ID, self.class::WORKER_LOG_FILE, 7)
-    logger.info("starting #{self.class}")
+    logger.debug("starting #{self.class}")
 
     @last_performed_at ||= {}
     unless is_enough_disk_space_left?(logger)

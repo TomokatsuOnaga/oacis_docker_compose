@@ -7,7 +7,7 @@ class DocumentDestroyer
 
   def perform()
     logger = LoggerForWorker.new(self.class::WORKER_ID, self.class::WORKER_LOG_FILE, 7)
-    logger.info("starting #{self.class}")
+    logger.debug("starting #{self.class}")
     @logger = logger
 
     destroy_documents( Simulator.where(to_be_destroyed: true) )
