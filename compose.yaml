@@ -38,4 +38,4 @@ volumes:
   mongo_data:
   worker_logs:
   result_development:
-  mong_config_db:
+  mongo_config_db:
