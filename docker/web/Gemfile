@@ -34,6 +34,7 @@ gem 'rubyzip'
 # for workers
 gem "sidekiq", '~> 5.0'
 gem "sidekiq-scheduler"
+gem "sidekiq-unique-jobs"
 gem "sys-filesystem"
 
 # for cli
