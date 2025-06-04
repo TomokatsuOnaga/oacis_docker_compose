@@ -14,6 +14,8 @@ services:
     build: ./docker/web
     environment:
       - RAILS_ENV=development
+    volumes:
+      - result_development:/oacis/public/Result_development
     ports:
       - "3000:3000"
     depends_on:
@@ -28,9 +30,11 @@ services:
     volumes:
       - ./docker/web/app/workers/document_destroyer.rb:/oacis/app/workers/document_destroyer.rb
       - worker_logs:/oacis/log
+      - result_development:/oacis/public/Result_development
     depends_on:
       - web
 
 volumes:
   mongo_data:
   worker_logs:
+  result_development:
