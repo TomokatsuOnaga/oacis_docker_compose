@@ -1,6 +1,17 @@
 class ParameterSetsCreator
+  include Sidekiq::Worker
 
-  def self.perform(logger)
+  INTERVAL = 5
+
+  WORKER_ID = :service
+  WORKER_PID_FILE = Rails.root.join('tmp', 'pids', "service_worker.pid")
+  WORKER_LOG_FILE = Rails.root.join('log', "service_worker.log")
+  WORKER_STDOUT_FILE = Rails.root.join('log', "service_worker_out.log")
+
+  def perform()
+    logger = LoggerForWorker.new(self.class::WORKER_ID, self.class::WORKER_LOG_FILE, 7)
+    logger.info("starting #{self.class}")
+    
     SaveTask.all.each do |task|
       begin
         logger.debug("creating PS in batch. Task: #{task.id}")

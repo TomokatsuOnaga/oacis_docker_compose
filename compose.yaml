@@ -26,7 +26,7 @@ services:
     environment:
       - RAILS_ENV=development
     volumes:
-      - ./docker/web/app/workers/parameter_sets_creater.rb:/oacis/app/workers/parameter_sets_creater.rb
+      - ./docker/web/app/workers/parameter_sets_creator.rb:/oacis/app/workers/parameter_sets_creator.rb
       - worker_logs:/oacis/log
     depends_on:
       - web

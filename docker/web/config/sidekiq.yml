@@ -7,3 +7,7 @@
     job_observer:
       cron: '*/5 * * * * *'
       class: JobObserver
+
+    parameter_sets_creator:
+      cron: '*/5 * * * * *'
+      class: ParameterSetsCreator
