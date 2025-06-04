@@ -4,6 +4,8 @@ services:
     restart: always
     volumes:
       - mongo_data:/data/db
+    ports:
+      - "27017:27017"
 
   redis:
     image: redis:8.0.1
