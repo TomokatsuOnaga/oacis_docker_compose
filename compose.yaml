@@ -24,7 +24,7 @@ services:
     environment:
       - RAILS_ENV=development
     volumes:
-      - ./docker/web/app/workers/job_submitter.rb:/oacis/app/workers/job_submitter.rb  
+      - ./docker/web/app/workers/:/oacis/app/workers/
       - worker_logs:/oacis/log
     depends_on:
       - web

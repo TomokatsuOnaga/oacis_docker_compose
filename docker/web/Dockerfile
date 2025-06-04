@@ -23,8 +23,6 @@ COPY ./config/routes.rb /oacis/config/routes.rb
 
 COPY ./app/workers/job_submitter.rb /oacis/app/workers/job_submitter.rb
 
-COPY ./app/workers/hello_worker.rb /oacis/app/workers/hello_worker.rb
-
 COPY ./app/controllers/runs_controller.rb /oacis/app/controllers/runs_controller.rb
 
 COPY ./.ssh/config /root/.ssh/config
