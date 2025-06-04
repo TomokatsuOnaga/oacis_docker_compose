@@ -1,6 +1,17 @@
 class JobObserver
+  include Sidekiq::Worker
 
-  def self.perform(logger)
+  INTERVAL = 5
+
+  WORKER_ID = :observer
+  WORKER_PID_FILE = Rails.root.join('tmp', 'pids', "job_observer_worker.pid")
+  WORKER_LOG_FILE = Rails.root.join('log', "job_observer_worker.log")
+  WORKER_STDOUT_FILE = Rails.root.join('log', "job_observer_worker_out.log")
+
+  def perform()
+    logger = LoggerForWorker.new(self.class::WORKER_ID, self.class::WORKER_LOG_FILE, 7)
+    logger.info("starting #{self.class}")
+
     @last_performed_at ||= {}
     unless is_enough_disk_space_left?(logger)
       logger.error("Disk space is not enough to include submitted jobs. Aborting.")
@@ -24,7 +35,7 @@ class JobObserver
   end
 
   private
-  def self.observe_host(host, logger)
+  def observe_host(host, logger)
     # host.check_submitted_job_status(logger)
     return if host.submitted_runs.count == 0 and host.submitted_analyses.count == 0
     host.start_ssh_shell(logger: logger) do |sh|
@@ -46,7 +57,7 @@ class JobObserver
     end
   end
 
-  def self.destroy_jobs(jobs, host, handler, logger)
+  def destroy_jobs(jobs, host, handler, logger)
     logger.debug "deleting cancelled jobs #{jobs.map(&:id)}" if jobs.present?
     jobs.each do |job|
       break if $term_received
@@ -63,7 +74,7 @@ class JobObserver
     end
   end
 
-  def self.observe_jobs(jobs, host, handler, logger)
+  def observe_jobs(jobs, host, handler, logger)
     remote_statuses = handler.remote_status_multiple(jobs, logger) if jobs.present? and handler.support_multiple_xstat?
     jobs.each do |job|
       break if $term_received
@@ -72,7 +83,7 @@ class JobObserver
     end
   end
 
-  def self.observe_job(job, host, handler, remote_status, logger)
+  def observe_job(job, host, handler, remote_status, logger)
     if remote_status.nil?
       logger.debug("checking the job status of: #{job.class}:#{job.id}")
       remote_status = handler.remote_status(job, logger)
@@ -96,7 +107,7 @@ class JobObserver
     logger.error ex.backtrace
   end
 
-  def self.is_enough_disk_space_left?(logger)
+  def is_enough_disk_space_left?(logger)
     FileUtils.mkdir_p( ResultDirectory.root ) # to assure the existence of the result dir
     rate = DiskSpaceChecker.rate
     b = true
