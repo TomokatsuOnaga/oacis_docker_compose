@@ -1,6 +1,8 @@
 class DocumentDestroyer
   include Sidekiq::Worker
 
+  sidekiq_options lock: :until_executed
+
   WORKER_ID = :service
   WORKER_LOG_FILE = Rails.root.join('log', "service_worker.log")
   WORKER_STDOUT_FILE = Rails.root.join('log', "service_worker_out.log")

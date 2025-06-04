@@ -1,6 +1,8 @@
 class JobObserver
   include Sidekiq::Worker
 
+  sidekiq_options lock: :until_executed
+
   WORKER_ID = :observer
   WORKER_LOG_FILE = Rails.root.join('log', "job_observer_worker.log")
   WORKER_STDOUT_FILE = Rails.root.join('log', "job_observer_worker_out.log")
