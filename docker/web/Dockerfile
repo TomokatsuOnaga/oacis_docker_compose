@@ -11,29 +11,21 @@ WORKDIR /oacis
 
 RUN bundle install
 
-COPY ./mongoid.yml /oacis/config/mongoid.yml
+COPY ./config/mongoid.yml /oacis/config/mongoid.yml
 
-COPY ./cable.yml /oacis/config/cable.yml
+COPY ./config/cable.yml /oacis/config/cable.yml
 
-COPY ./sidekiq.rb /oacis/config/initializers/sidekiq.rb
-
-COPY ./sidekiq.yml /oacis/config/sidekiq.yml
-
-COPY ./routes.rb /oacis/config/routes.rb
-
-COPY ./app/workers/job_submitter.rb /oacis/app/workers/job_submitter.rb
-
-COPY ./job_observer.rb /oacis/app/workers/job_observer.rb
-
-COPY ./document_destroyer.rb /oacis/app/workers/document_destroyer.rb
-
-COPY ./parameter_sets_creator.rb /oacis/app/workers/parameter_sets_creator.rb
-
-COPY ./app/controllers/runs_controller.rb /oacis/app/controllers/runs_controller.rb
+COPY ./config/initializers/sidekiq.rb /oacis/config/initializers/sidekiq.rb
 
 COPY ./config/sidekiq.yml /oacis/config/sidekiq.yml
 
+COPY ./config/routes.rb /oacis/config/routes.rb
+
+COPY ./app/workers/job_submitter.rb /oacis/app/workers/job_submitter.rb
+
 COPY ./app/workers/hello_worker.rb /oacis/app/workers/hello_worker.rb
+
+COPY ./app/controllers/runs_controller.rb /oacis/app/controllers/runs_controller.rb
 
 COPY ./.ssh/config /root/.ssh/config
 
