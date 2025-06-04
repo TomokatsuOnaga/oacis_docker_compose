@@ -4,6 +4,6 @@
       cron: '*/5 * * * * *'
       class: JobSubmitter
 
-    hello_worker:
+    job_observer:
       cron: '*/5 * * * * *'
-      class: HelloWorker
+      class: JobObserver
