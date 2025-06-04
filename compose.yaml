@@ -4,6 +4,7 @@ services:
     restart: always
     volumes:
       - mongo_data:/data/db
+      - mongo_config_db:/data/configdb
     ports:
       - "27017:27017"
 
@@ -37,3 +38,4 @@ volumes:
   mongo_data:
   worker_logs:
   result_development:
+  mong_config_db:
