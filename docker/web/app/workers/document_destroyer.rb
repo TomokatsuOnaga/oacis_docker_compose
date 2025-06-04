@@ -1,6 +1,16 @@
 class DocumentDestroyer
+  include Sidekiq::Worker
 
-  def self.perform(logger)
+  INTERVAL = 5
+
+  WORKER_ID = :service
+  WORKER_PID_FILE = Rails.root.join('tmp', 'pids', "service_worker.pid")
+  WORKER_LOG_FILE = Rails.root.join('log', "service_worker.log")
+  WORKER_STDOUT_FILE = Rails.root.join('log', "service_worker_out.log")
+
+  def perform()
+    logger = LoggerForWorker.new(self.class::WORKER_ID, self.class::WORKER_LOG_FILE, 7)
+    logger.info("starting #{self.class}")
     @logger = logger
 
     destroy_documents( Simulator.where(to_be_destroyed: true) )
@@ -17,7 +27,7 @@ class DocumentDestroyer
     logger.error("Error in DocumentDestroyer: #{ex.inspect}")
   end
 
-  def self.destroy_documents(query)
+  def destroy_documents(query)
     if query.empty?
       @logger.debug "No document to be deleted is found"
     end
