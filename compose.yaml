@@ -3,7 +3,7 @@ services:
     image: mongo:8.0.10-rc0
     restart: always
     volumes:
-      - mongodb_data:/data/db
+      - mongo_data:/data/db
 
   redis:
     image: redis:8.0.1
@@ -25,8 +25,10 @@ services:
       - RAILS_ENV=development
     volumes:
       - ./docker/web/app/workers/job_submitter.rb:/oacis/app/workers/job_submitter.rb  
+      - worker_logs:/oacis/log
     depends_on:
       - web
 
 volumes:
-  mongodb_data:
+  mongo_data:
+  worker_logs:
