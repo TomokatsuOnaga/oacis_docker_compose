@@ -1,7 +1,17 @@
 class JobSubmitter
   include Sidekiq::Worker
 
-  def perform(logger)
+  INTERVAL = 5
+
+  WORKER_ID = :submitter
+  WORKER_PID_FILE = Rails.root.join('tmp', 'pids', "job_submitter_worker.pid")
+  WORKER_LOG_FILE = Rails.root.join('log', "job_submitter_worker.log")
+  WORKER_STDOUT_FILE = Rails.root.join('log', "job_submitter_worker_out.log")
+
+  def perform()
+    logger = LoggerForWorker.new(self.class::WORKER_ID, self.class::WORKER_LOG_FILE, 7)
+    logger.info("starting #{self.class}")
+
     @last_performed_at ||= {}
     destroy_jobs_to_be_destroyed(logger)
     Host.where(status: :enabled).each do |host|
@@ -56,7 +66,7 @@ class JobSubmitter
   end
 
   private
-  def self.submit(submittables, host, logger)
+  def submit(submittables, host, logger)
     # call start_ssh_shell in order to avoid establishing SSH connection for each run
     host.start_ssh_shell do |sh|
       handler = RemoteJobHandler.new(host)
@@ -76,7 +86,7 @@ class JobSubmitter
     end
   end
 
-  def self.destroy_jobs_to_be_destroyed(logger)
+  def destroy_jobs_to_be_destroyed(logger)
     Run.where(status: :created, to_be_destroyed: true).each do |run|
       if run.destroyable?
         logger.debug "Deleting Run #{run.id}"
