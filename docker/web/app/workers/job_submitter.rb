@@ -1,5 +1,7 @@
 class JobSubmitter
   include Sidekiq::Worker
+  
+  sidekiq_options lock: :until_executed
 
   WORKER_ID = :submitter
   WORKER_LOG_FILE = Rails.root.join('log', "job_submitter_worker.log")
