@@ -14,6 +14,8 @@ services:
       - RAILS_ENV=development
     ports:
       - "3000:3000"
+    volumes:
+      - ./docker/web/app/workers/job_submitter.rb:/oacis/app/workers/job_submitter.rb
     depends_on:
       - mongo
       - redis
