@@ -25,6 +25,8 @@ COPY ./app/workers/job_submitter.rb /oacis/app/workers/job_submitter.rb
 
 COPY ./app/workers/job_observer.rb /oacis/app/workers/job_observer.rb
 
+COPY ./app/workers/parameter_sets_creator.rb /oacis/app/workers/parameter_sets_creator.rb
+
 COPY ./app/controllers/runs_controller.rb /oacis/app/controllers/runs_controller.rb
 
 COPY ./.ssh/config /root/.ssh/config

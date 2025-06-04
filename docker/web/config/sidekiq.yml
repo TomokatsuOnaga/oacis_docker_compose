@@ -11,3 +11,7 @@
     parameter_sets_creator:
       cron: '*/5 * * * * *'
       class: ParameterSetsCreator
+
+    document_destroyer:
+      cron: '*/5 * * * * *'
+      class: DocumentDestroyer
