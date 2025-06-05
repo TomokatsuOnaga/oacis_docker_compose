@@ -16,8 +16,15 @@ services:
     build: ./docker/web
     volumes:
       - result_development:/oacis/public/Result_development
+      - type: bind
+        source: ./.ssh/config
+        target: /root/.ssh/config
+      - type: bind
+        source: /run/host-services/ssh-auth.sock
+        target: /run/host-services/ssh-auth.sock
     environment:
       - RAILS_ENV=development
+      - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
     ports:
       - "3000:3000"
     depends_on:
