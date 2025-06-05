@@ -5,11 +5,13 @@ services:
     volumes:
       - mongo_data:/data/db
       - mongo_config_db:/data/configdb
-    ports:
+    ports: # For debug. Not necessary for production
       - "27017:27017"
 
   redis:
     image: redis:8.0.1
+    ports: # For debug. Not necessary for production
+      - "6379:6379"
 
   web:
     build: ./docker/web
