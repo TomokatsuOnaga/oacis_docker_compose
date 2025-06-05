@@ -28,8 +28,6 @@ RUN eval "$(ssh-agent -s)" && \
 
 RUN mkdir -p /oacis/log
 
-RUN mkdir -p /oacis/tmp/pids
-
 EXPOSE 3000
 
 CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
