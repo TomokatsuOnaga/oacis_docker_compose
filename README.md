@@ -5,6 +5,7 @@ This is a docker compose file for OACIS.
 - 4コンテナに分けた構成です。web, mongo db, redis, sidekiq から構成されます
 - docker compose を使ってまとめて起動できます
 - Apple Virtualization Framework に対応しています
+- 注意点 host polling interval には対応していません
 
 # 1. 事前準備
 - xsub をスパコンにインストールして下さい
