@@ -8,15 +8,9 @@ WORKDIR /oacis
 
 RUN bundle install
 
-COPY ./config/mongoid.yml /oacis/config/mongoid.yml
-
-COPY ./config/cable.yml /oacis/config/cable.yml
+COPY ./config/*.yml ./config/routes.rb /oacis/config/
 
 COPY ./config/initializers/sidekiq.rb /oacis/config/initializers/sidekiq.rb
-
-COPY ./config/sidekiq.yml /oacis/config/sidekiq.yml
-
-COPY ./config/routes.rb /oacis/config/routes.rb
 
 COPY ./app/workers/job_submitter.rb /oacis/app/workers/job_submitter.rb
 
