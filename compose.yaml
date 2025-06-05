@@ -14,10 +14,10 @@ services:
 
   web:
     build: ./docker/web
-    environment:
-      - RAILS_ENV=development
     volumes:
       - result_development:/oacis/public/Result_development
+    environment:
+      - RAILS_ENV=development
     ports:
       - "3000:3000"
     depends_on:
@@ -27,11 +27,18 @@ services:
   sidekiq:
     build: ./docker/web
     command: bundle exec sidekiq
-    environment:
-      - RAILS_ENV=development
     volumes:
       - worker_logs:/oacis/log
       - result_development:/oacis/public/Result_development
+      - type: bind
+        source: ./.ssh/config
+        target: /root/.ssh/config
+      - type: bind
+        source: /run/host-services/ssh-auth.sock
+        target: /run/host-services/ssh-auth.sock
+    environment:
+      - RAILS_ENV=development
+      - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
     depends_on:
       - web
 
