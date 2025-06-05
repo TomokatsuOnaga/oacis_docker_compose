@@ -12,13 +12,7 @@ COPY ./config/*.yml ./config/routes.rb /oacis/config/
 
 COPY ./config/initializers/sidekiq.rb /oacis/config/initializers/sidekiq.rb
 
-COPY ./app/workers/job_submitter.rb /oacis/app/workers/job_submitter.rb
-
-COPY ./app/workers/job_observer.rb /oacis/app/workers/job_observer.rb
-
-COPY ./app/workers/parameter_sets_creator.rb /oacis/app/workers/parameter_sets_creator.rb
-
-COPY ./app/workers/document_destroyer.rb /oacis/app/workers/document_destroyer.rb
+COPY ./app/workers/*.rb /oacis/app/workers/
 
 COPY ./app/controllers/runs_controller.rb /oacis/app/controllers/runs_controller.rb
 
