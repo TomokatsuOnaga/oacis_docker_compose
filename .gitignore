@@ -1,3 +1,4 @@
 .ssh/config
 oacis/
 volume_backups/
+.DS_Store
