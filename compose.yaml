@@ -25,6 +25,7 @@ services:
     environment:
       - RAILS_ENV=development
       - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+      - TZ=${TZ:-utc} # Dockerホストの TZ 環境変数を参照. ない場合は utc
     ports:
       - "3000:3000"
     depends_on:
@@ -46,6 +47,7 @@ services:
     environment:
       - RAILS_ENV=development
       - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
+      - TZ=${TZ:-utc} # Dockerホストの TZ 環境変数を参照. ない場合は utc
     depends_on:
       - web
 
