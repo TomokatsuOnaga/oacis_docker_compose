@@ -1,3 +1,5 @@
+![GitHub Release](https://img.shields.io/github/v/release/TomokatsuOnaga/oacis_docker_compose)
+
 [OACIS](https://github.com/crest-cassia/oacis) が動く docker compose リポジトリです
 
 This is a docker compose file for OACIS.
