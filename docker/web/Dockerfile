@@ -1,7 +1,7 @@
 FROM ruby:2.7.8
 
 # download oacis
-RUN git clone --recursive -b master --depth 1 https://github.com/crest-cassia/oacis.git
+ADD https://github.com/crest-cassia/oacis.git /oacis
 WORKDIR /oacis
 
 # install gems
