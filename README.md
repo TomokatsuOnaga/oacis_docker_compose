@@ -133,6 +133,8 @@ $ docker compose down --rmi local && docker compose up
   - [cable.yml](docker/web/config/cable.yml)
     - localhost を redis に変更しました。
 ## ワーカーの変更
+1コンテナ1プロセスにするために、ワーカーの実行方式を変えました。できるだけ、元々のコードを残すように変更したつもりです。  
+各コンテナのPID1が与えられるプロセスが終了しないようにする必要があります。ワーカーには `bundle exec sidekiq` プロセスを用いています。
 - [docker/web/Gemfile](docker/web/Gemfile)
   - sidekiq, sidekiq-scheduler, および sidekiq-unique-jobs を追加しました。
 - [docker/web/config/](docker/web/config/)
