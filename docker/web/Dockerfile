@@ -1,7 +1,7 @@
 FROM ruby:2.7.8
 
 # download oacis
-ADD https://github.com/crest-cassia/oacis.git /oacis
+ADD https://github.com/TomokatsuOnaga/oacis.git /oacis
 WORKDIR /oacis
 
 # install gems
