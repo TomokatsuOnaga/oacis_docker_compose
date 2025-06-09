@@ -124,3 +124,45 @@ $ docker compose down --rmi local && docker compose up
     ```
     と上書きしています。
 
+
+# 7. 本家 [OACIS](https://github.com/crest-cassia/oacis) からの変更点のまとめ
+## ネットワーク構成の変更
+- [docker/web/config/](docker/web/config/)
+  - [mongoid.yml](docker/web/config/mongoid.yml)
+    - localhost を mongo に変更しました。
+  - [cable.yml](docker/web/config/cable.yml)
+    - localhost を redis に変更しました。
+## ワーカーの変更
+- [docker/web/Gemfile](docker/web/Gemfile)
+  - sidekiq, sidekiq-scheduler, および sidekiq-unique-jobs を追加しました。
+- [docker/web/config/](docker/web/config/)
+  - [routes.rb](docker/web/config/routes.rb)
+    - `/sidekiq` を追加しました。https://localhost:3000/sidekiq でワーカージョブの実行状況を監視できます。
+  - [initializers/sidekiq.rb](docker/web/config/initializers/sidekiq.rb)
+    - sidekiq の設定ファイルを追加しました。
+  - [sidekiq.yml](docker/web/config/sidekiq.yml)
+    - 5秒ごとに、４つのワーカーを動かす設定を入れました。ワーカーは job_submitter, job_observer, parameter_sets_creator, および document_destroyer です。
+- [docker/web/app/controllers/run_controller.rb)](docker/web/app/controllers/runs_controller.rb)
+  - ワーカーの存在チェックを抜きました。
+- [docker/web/app/workers/](docker/web/app/workers/)
+  - [job_submitter.rb](docker/web/app/workers/job_submitter.rb)
+    - sidekiq に対応するように、
+      ```ruby
+      class JobSubmitter
+        include Sidekiq::Worker
+        
+        sidekiq_options lock: :until_executed
+
+        WORKER_ID = :submitter
+        WORKER_LOG_FILE = Rails.root.join('log', "job_submitter_worker.log")
+        WORKER_STDOUT_FILE = Rails.root.join('log', "job_submitter_worker_out.log")
+
+      ```
+      と設定を加えました。クラスメソッドをインスタンスメソッドに変更しています。
+      ```ruby
+      def perform()
+        logger = LoggerForWorker.new(self.class::WORKER_ID, self.class::WORKER_LOG_FILE, 7)
+        logger.debug("starting #{self.class}")
+      ```
+      `perform` 内で `logger` を作るようにしました。
+  - 他の 3 つのワーカーも同様です。[job_observer.rb](docker/web/app/workers/job_observer.rb), [parameter_setes_creator.rb](docker/web/app/workers/parameter_sets_creator.rb), および [document_destroyer.rb](docker/web/app/workers/document_destroyer.rb)。
