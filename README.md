@@ -90,3 +90,37 @@ $ docker compose down
 ```zsh
 $ docker compose down --rmi local && docker compose up
 ```
+
+# 6. 主要なファイルの説明
+- [compose.yaml](compose.yaml)
+  - 4コンテナ構成にしました。コンテナは mongo, redis, rails web, および rails sidekiq です。
+  - 3ボリュームとネットワーク構成が自動作成されます。ボリュームは mongo_data, worker_logs, および result_development です。
+  - .ssh/config はバインドマウントしています。コンテナ内からホストマシンの .ssh/config ファイルを参照しています。機密情報が入るため .gitignore に入れています。[.ssh/config_template](.ssh/config_template)にテンプレートを入れています。
+  - 秘密鍵は、ssh-auth.sock を使って、ホストの ssh-agent を参照します。ホストマシンで `ssh-add` を使ってパスフレーズを登録してあれば、コンテナ内から特段の設定をせずとも利用できます。コンテナ内で、秘密鍵の `ssh-add` は必ずしも必要ありません。
+  - ホストマシンでタイムゾーンを TZ 環境変数に設定しておくと、コンテナ内で参照されます。TZ=Asia/Tokyo とすると日本時間を設定できます。
+- [docker/web/Dockerfile](docker/web/Dockerfile)
+  - [OACIS](https://github.com/crest-cassia/oacis) をクローンしています
+    ```Dockerfile
+    ADD https://gibhub/com/crest-cassia/oacis.git /oacis
+    ```
+    `RUN git clone` ではなく `ADD`を用いることで、更新を検知します。  
+    更新を取り込む時は、
+    [dockerfile-を再度ビルドして起動](#dockerfile-を再度ビルドして起動) を実行してください。
+  - 差分のファイルを取り込んでいます。
+    ```Dockerfile
+    COPY ./config/*.yml ./config/routes.rb /oacis/config/
+    COPY ./config/initializers/sidekiq.rb /oacis/config/initializers/sidekiq.rb
+    COPY ./app/workers/*.rb /oacis/app/workers/
+    COPY ./app/controllers/runs_controller.rb /oacis/app/controllers/runs_controller.rb
+    ```
+  - web サーバーは 
+    ```Dockerfile
+    CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]
+    ```
+    で起動しています。  
+    sidekiq サーバーは [compose.yaml](compose.yaml) 内で
+    ```yml
+    command: bundle exec sidekiq
+    ```
+    と上書きしています。
+
