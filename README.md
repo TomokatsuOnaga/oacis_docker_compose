@@ -71,7 +71,7 @@ $ docker compose down
 ## データは3つのボリュームに保存されています
 - mongo_data ボリューム　データベースの保存先
 - result_development ボリューム　結果ファイルの保存先
-- worker_logs ボリューム　ワーカーのログの保存先
+- worker_logs ボリューム　ワーカーのログの保存先  
   ボリューム内のファイルは Docker Desktop アプリケーションから確認することができます
 
 ## バックアップ方法
