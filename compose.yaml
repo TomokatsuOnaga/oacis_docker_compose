@@ -22,9 +22,6 @@ services:
       - type: bind
         source: /run/host-services/ssh-auth.sock
         target: /run/host-services/ssh-auth.sock
-      - type: bind
-        source: ./oacis/app/assets/javascripts/application.js
-        target: /oacis/app/assets/javascripts/application.js
     environment:
       - RAILS_ENV=development
       - SSH_AUTH_SOCK=/run/host-services/ssh-auth.sock
