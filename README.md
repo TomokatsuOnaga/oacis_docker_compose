@@ -37,6 +37,8 @@ $ docker compose up
 ```shell
 $ docker compose up -d
 ```
+docker compose up の出力例
+![docker compose up の出力例](docs/docker_compose_up_stdout.png)
 
 ## 2. シェルにログイン
 - ウェブサーバーにログイン
@@ -69,6 +71,7 @@ $ docker compose down
 - mongo_data ボリューム　データベースの保存先
 - result_development ボリューム　結果ファイルの保存先
 - worker_logs ボリューム　ワーカーのログの保存先
+ボリューム内のファイルは Docker Desktop アプリケーションから確認することができます
 
 ## バックアップ方法
 下記の二つのボリュームをエクスポートして下さい。
