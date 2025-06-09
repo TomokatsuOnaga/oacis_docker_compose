@@ -26,7 +26,8 @@ This is a docker compose file for OACIS.
     IdentityFile ~/.ssh/id_ed25519_XXXX
     User ku10000001
   ```
-- パソコンで ssh-add を使ってパスフレーズを登録しておいて下さい。コンテナ内から参照されます
+  oacis_docker_compose/.ssh/config はバインドマウントしています。手元のパソコンとコンテナ内の両方から見えます。変更も互いに反映されます。
+- 手元のパソコンで ssh-add を使ってパスフレーズを登録しておいて下さい。コンテナ内から参照されます
 
 # 2. 主要な使い方
 ## 1. 起動
@@ -71,7 +72,7 @@ $ docker compose down
 - mongo_data ボリューム　データベースの保存先
 - result_development ボリューム　結果ファイルの保存先
 - worker_logs ボリューム　ワーカーのログの保存先
-ボリューム内のファイルは Docker Desktop アプリケーションから確認することができます
+  ボリューム内のファイルは Docker Desktop アプリケーションから確認することができます
 
 ## バックアップ方法
 下記の二つのボリュームをエクスポートして下さい。
@@ -79,10 +80,10 @@ $ docker compose down
 - result_development ボリューム
 
 # 4. 構成
-- rails web httpsリクエストを処理するサーバー
-- rails sidekiq ジョブワーカーを処理するサーバー
-- mongo db データベース
-- redis データベース
+- rails web: httpsリクエストを処理するサーバー
+- rails sidekiq: ジョブワーカーを処理するサーバー
+- mongo db: データベース
+- redis: データベース
 
 # 5. その他のコマンド
 ## Dockerfile を再度ビルドして起動
