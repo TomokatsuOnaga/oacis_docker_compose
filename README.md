@@ -1,5 +1,7 @@
 ![GitHub Release](https://img.shields.io/github/v/release/TomokatsuOnaga/oacis_docker_compose)
 
+[![Build and Push Docker image](https://github.com/TomokatsuOnaga/oacis_docker_compose/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/TomokatsuOnaga/oacis_docker_compose/actions/workflows/docker-publish.yml)
+
 [OACIS](https://github.com/crest-cassia/oacis) が動く docker compose リポジトリです
 
 This is a docker compose file for OACIS.
