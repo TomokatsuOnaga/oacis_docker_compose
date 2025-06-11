@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main  # main ブランチに push されたとき実行
+  workflow_dispatch:  # 手動実行にも対応
 
 jobs:
   build-and-push:
@@ -20,7 +21,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Docker イメージをビルド
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/oacis:latest .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/oacis:latest docker/web/
 
       - name: Docker イメージをプッシュ
         run: docker push ${{ secrets.DOCKER_USERNAME }}/oacis:latest
