@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main  # main ブランチに push されたとき実行
+      - 'add/**'   # すべての add ブランチ
+      - 'fix/**'   # すべての fix ブランチ
   workflow_dispatch:  # 手動実行にも対応
 
 jobs:
