@@ -12,6 +12,12 @@
 - 1プロセス1コンテナ
 - プロセスの exit は、コンテナの exit
 - 1プロセスなので、そのコマンドを CMD に記載する（ENTORYPOINT もあるが、通常は CMD が標準）
+- `./oacis_boot.sh` や `./oacis_start.sh` もこれまでの開発の結晶だが、Docker らしくできるといい
+
+### できるといいこと
+- `docker compose up`, `docker compose stop`, `docker compose start` や `docker compose down` が使えると良い
+- mongo db などが、公式のイメージを使えると嬉しい
+- QEMU もいいが、Apple Visualization Framework が使えるのも良い
 
 ### 設定したこと
 1. mongoid.yml の URL を変更した `mongo:27017`
