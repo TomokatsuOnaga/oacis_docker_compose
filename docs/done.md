@@ -15,6 +15,7 @@
 - プロセスの exit は、コンテナの exit
 - 1プロセスなので、そのコマンドを CMD に記載する（ENTORYPOINT もあるが、通常は CMD が標準）
 - `./oacis_boot.sh` や `./oacis_start.sh` もこれまでの開発の結晶だが、Docker らしくできるといい
+- 活用できるところは、できるだけ、高パフォーマンスである "Volume" を活用したい。
 
 ### できるといいこと
 - `docker compose up`, `docker compose stop`, `docker compose start` や `docker compose down` が使えると良い
