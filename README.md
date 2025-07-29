@@ -6,6 +6,8 @@
 
 This is a docker compose file for OACIS.
 
+本家 [OACIS](https://github.com/crest-cassia/oacis) からマルチコンテナ構成に対応した途中経過と変更点は、[done.md](docs/done.md) にまとめています。
+
 # 特徴
 - 1コンテナ1プロセスとし、また、ボリュームを活用して、起動と終了が高速になりました。
 - WEBコンテナとワーカーコンテナを分けたので, 100ジョブ投入時のレスポンスが早くなりました。また、Docker Desktop から、それぞれのCPU使用率を監視可能です。
