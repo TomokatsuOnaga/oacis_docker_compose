@@ -1,12 +1,14 @@
 # [oacis_docker](../../../../crest-cassia/oacis_docker) からの変更点
 
-## 行ったこと
+## 概要
 
 ### 4コンテナ構成にした
 1. mongo db
 2. redis
 3. rails (ruby)
 4. workers (ruby)
+
+## 目標としたこと
 
 ### Docker の原則に従いたい
 - 1プロセス1コンテナ
@@ -18,6 +20,8 @@
 - `docker compose up`, `docker compose stop`, `docker compose start` や `docker compose down` が使えると良い
 - mongo db などが、公式のイメージを使えると嬉しい
 - QEMU もいいが、Apple Visualization Framework が使えるのも良い
+
+## 行ったこと
 
 ### 設定したこと
 1. mongoid.yml の URL を変更した `mongo:27017`
@@ -33,5 +37,10 @@
 ### 導入したこと
 - ホストマシン（Mac）の ssh-agent を Docker（ubuntu） 内からも参照したい
 
-### 参照した本
+## まとめ
+- できるだけ既存のコードを残しつつ、Docker マルチコンテナ構成の書き方を取り入れた
+- 4コンテナ構成で実行できた
+- "host polling interval" などはまだ対応していないが、今後対応したい
+
+## 参照した本
 [開発系エンジニアのためのDocker絵とき入門 ](https://www.amazon.co.jp/開発系エンジニアのためのDocker絵とき入門-鈴木亮/dp/4798071501)
