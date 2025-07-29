@@ -30,10 +30,11 @@
 
 ### 対応したこと
 1. mongoid.yml など、変更したファイルを Dockerfile にコピーした
-2. web サーバーには、`CMD ["bundle", "exec", "rake", "daemon:start"]` を使っている
-3. ワーカーには、`command: bundle exec ruby -r './config/environment' ./config/boot_job_submitter_worker.rb start` を試した
-4. web サーバーを`CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]`を使うようになった
-5. ワーカーのプロセスが exit しないように、調べた結果　Sidekiq を使い始めた
+2. "./oacis_boot.sh", "./oacis_start.sh" などの最後のコマンドを、`CMD` 命令に移した。それまでの設定は可能なら、`ENV`, `COPY`, `RUN` 命令などで書けると良い
+3. web サーバーには、`CMD ["bundle", "exec", "rake", "daemon:start"]` を使っている
+4. ワーカーには、`command: bundle exec ruby -r './config/environment' ./config/boot_job_submitter_worker.rb start` を試した
+5. web サーバーを`CMD ["bundle", "exec", "rails", "s", "-b", "0.0.0.0"]`を使うようになった
+6. ワーカーのプロセスが exit しないように、調べた結果　Sidekiq を使い始めた
 
 ### 導入したこと
 - ホストマシン（Mac）の ssh-agent を Docker（ubuntu） 内からも参照したい
